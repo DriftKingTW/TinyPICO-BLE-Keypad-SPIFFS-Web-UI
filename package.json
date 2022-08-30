@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build && cp -R dist/* ~/Documents/PlatformIO/Projects/TinyPICO-BLE-Marco-Pad/data",
+    "build": "vue-cli-service build && rm -rf ~/Documents/PlatformIO/Projects/TinyPICO-BLE-Marco-Pad/data/js && cp -R dist/* ~/Documents/PlatformIO/Projects/TinyPICO-BLE-Marco-Pad/data",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
