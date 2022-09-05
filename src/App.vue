@@ -42,7 +42,36 @@
                   color="primary"
                   :loading="isUpdatingConfig"
                   :disabled="isInitializing"
-                  @click="updateConfig"
+                  @click="updateConfig('keyconfig')"
+                >
+                  <v-icon left small>mdi-cloud-upload</v-icon>
+                  Update
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+            <v-card flat :loading="isInitializing">
+              <v-card-title>
+                <v-icon left>mdi-hammer-screwdriver</v-icon>
+                Macros Configuration Update
+              </v-card-title>
+              <v-card-text>
+                <v-textarea
+                  v-model="macros"
+                  :disabled="isInitializing"
+                  outlined
+                  hide-details
+                  prepend-icon="mdi-code-json"
+                  label="Content of macros.json"
+                ></v-textarea>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  text
+                  color="primary"
+                  :loading="isUpdatingConfig"
+                  :disabled="isInitializing"
+                  @click="updateConfig('macros')"
                 >
                   <v-icon left small>mdi-cloud-upload</v-icon>
                   Update
@@ -287,6 +316,7 @@ export default {
     return {
       tinypicoUrl: "",
       keyconfig: "",
+      macros: "",
       serverResponse: "",
       spiffs: [],
       network: {
@@ -313,10 +343,10 @@ export default {
     if (dark) this.$vuetify.theme.dark = true;
     else this.$vuetify.theme.dark = false;
 
-    let protocol = location.protocol;
-    let host = location.host;
-    this.tinypicoUrl = `${protocol}//${host}`;
-    // this.tinypicoUrl = `http://tp-keypad.local`;
+    // let protocol = location.protocol;
+    // let host = location.host;
+    // this.tinypicoUrl = `${protocol}//${host}`;
+    this.tinypicoUrl = `http://tp-keypad.local`;
     console.log(this.tinypicoUrl);
 
     this.initialize();
@@ -325,9 +355,12 @@ export default {
   methods: {
     async initialize() {
       this.isInitializing = true;
-      let res = await fetch(`${this.tinypicoUrl}/api/keyconfig`);
+      let res = await fetch(`${this.tinypicoUrl}/api/config?type=keyconfig`);
       let data = await res.json();
-      this.keyconfig = JSON.stringify(data.keyconfig);
+      this.keyconfig = JSON.stringify(data.config);
+      res = await fetch(`${this.tinypicoUrl}/api/config?type=macros`);
+      data = await res.json();
+      this.macros = JSON.stringify(data.config);
       res = await fetch(`${this.tinypicoUrl}/api/spiffs`);
       data = await res.json();
       this.spiffs = JSON.parse(JSON.stringify(data));
@@ -337,7 +370,7 @@ export default {
       this.isInitializing = false;
     },
 
-    async updateConfig() {
+    async updateConfig(type) {
       this.isUpdatingConfig = true;
       try {
         const options = {
@@ -346,12 +379,15 @@ export default {
             Accept: "application/json",
             "Content-Type": "application/json;charset=UTF-8",
           },
-          body: this.keyconfig,
+          body: this[type],
         };
-        const res = await fetch(`${this.tinypicoUrl}/api/keyconfig`, options);
+        const res = await fetch(
+          `${this.tinypicoUrl}/api/config?type=${type}`,
+          options
+        );
         const data = await res.json();
         if (data.message === "success") {
-          this.serverResponse = "Key configurations updated";
+          this.serverResponse = "Configurations updated";
           this.triggerSnackbar({
             status: "success",
             text: this.serverResponse,
