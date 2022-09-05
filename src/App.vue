@@ -343,10 +343,10 @@ export default {
     if (dark) this.$vuetify.theme.dark = true;
     else this.$vuetify.theme.dark = false;
 
-    // let protocol = location.protocol;
-    // let host = location.host;
-    // this.tinypicoUrl = `${protocol}//${host}`;
-    this.tinypicoUrl = `http://tp-keypad.local`;
+    let protocol = location.protocol;
+    let host = location.host;
+    this.tinypicoUrl = `${protocol}//${host}`;
+    // this.tinypicoUrl = `http://tp-keypad.local`;
     console.log(this.tinypicoUrl);
 
     this.initialize();
