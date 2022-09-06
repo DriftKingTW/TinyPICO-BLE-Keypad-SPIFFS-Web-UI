@@ -42,6 +42,16 @@
                   color="primary"
                   :loading="isUpdatingConfig"
                   :disabled="isInitializing"
+                  @click="beautifyConfig('keyconfig')"
+                >
+                  <v-icon left small>mdi-code-json</v-icon>
+                  Beautify JSON
+                </v-btn>
+                <v-btn
+                  text
+                  color="primary"
+                  :loading="isUpdatingConfig"
+                  :disabled="isInitializing"
                   @click="updateConfig('keyconfig')"
                 >
                   <v-icon left small>mdi-cloud-upload</v-icon>
@@ -66,6 +76,16 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
+                <v-btn
+                  text
+                  color="primary"
+                  :loading="isUpdatingConfig"
+                  :disabled="isInitializing"
+                  @click="beautifyConfig('macros')"
+                >
+                  <v-icon left small>mdi-code-json</v-icon>
+                  Beautify JSON
+                </v-btn>
                 <v-btn
                   text
                   color="primary"
@@ -368,6 +388,14 @@ export default {
       data = await res.json();
       this.network = JSON.parse(JSON.stringify(data.wifi));
       this.isInitializing = false;
+    },
+
+    beautifyConfig(type) {
+      if (type === "keyconfig") {
+        this.keyconfig = JSON.stringify(JSON.parse(this.keyconfig), null, 4);
+      } else if (type === "macros") {
+        this.macros = JSON.stringify(JSON.parse(this.macros), null, 4);
+      }
     },
 
     async updateConfig(type) {
