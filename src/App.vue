@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app color="grey darken-4 white--text">
       <v-toolbar-title>
-        <v-icon left color="white">mdi-keyboard</v-icon>
+        <v-icon left color="white">{{ mdiKeyboard }}</v-icon>
         TinyPICO BLE Keypad by DriftKingTW
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -12,7 +12,7 @@
         @click="$vuetify.theme.dark = !$vuetify.theme.dark"
         class="mr-2"
       >
-        <v-icon>mdi-theme-light-dark</v-icon>
+        <v-icon>{{ mdiThemeLightDark }}</v-icon>
       </v-btn>
     </v-app-bar>
 
@@ -22,7 +22,7 @@
           <v-col cols="12" md="6">
             <v-card flat :loading="isInitializing">
               <v-card-title>
-                <v-icon left>mdi-hammer-screwdriver</v-icon>
+                <v-icon left>{{ mdiHammerScrewdriver }}</v-icon>
                 Keymap Configuration Update
               </v-card-title>
               <v-card-text>
@@ -31,7 +31,7 @@
                   :disabled="isInitializing"
                   outlined
                   hide-details
-                  prepend-icon="mdi-code-json"
+                  :prepend-icon="mdiCodeJson"
                   label="Content of keyconfig.json"
                 ></v-textarea>
               </v-card-text>
@@ -44,7 +44,7 @@
                   :disabled="isInitializing"
                   @click="beautifyConfig('keyconfig')"
                 >
-                  <v-icon left small>mdi-code-json</v-icon>
+                  <v-icon left small>{{ mdiCodeJson }}</v-icon>
                   Beautify JSON
                 </v-btn>
                 <v-btn
@@ -54,14 +54,14 @@
                   :disabled="isInitializing"
                   @click="updateConfig('keyconfig')"
                 >
-                  <v-icon left small>mdi-cloud-upload</v-icon>
+                  <v-icon left small>{{ mdiCloudUpload }}</v-icon>
                   Update
                 </v-btn>
               </v-card-actions>
             </v-card>
             <v-card flat :loading="isInitializing">
               <v-card-title>
-                <v-icon left>mdi-hammer-screwdriver</v-icon>
+                <v-icon left>{{ mdiHammerScrewdriver }}</v-icon>
                 Macros Configuration Update
               </v-card-title>
               <v-card-text>
@@ -70,7 +70,7 @@
                   :disabled="isInitializing"
                   outlined
                   hide-details
-                  prepend-icon="mdi-code-json"
+                  :prepend-icon="mdiCodeJson"
                   label="Content of macros.json"
                 ></v-textarea>
               </v-card-text>
@@ -83,7 +83,7 @@
                   :disabled="isInitializing"
                   @click="beautifyConfig('macros')"
                 >
-                  <v-icon left small>mdi-code-json</v-icon>
+                  <v-icon left small>{{ mdiCodeJson }}</v-icon>
                   Beautify JSON
                 </v-btn>
                 <v-btn
@@ -93,7 +93,7 @@
                   :disabled="isInitializing"
                   @click="updateConfig('macros')"
                 >
-                  <v-icon left small>mdi-cloud-upload</v-icon>
+                  <v-icon left small>{{ mdiCloudUpload }}</v-icon>
                   Update
                 </v-btn>
               </v-card-actions>
@@ -102,7 +102,7 @@
           <v-col cols="12" md="6">
             <v-card>
               <v-card-title>
-                <v-icon left>mdi-sd</v-icon>
+                <v-icon left>{{ mdiSd }}</v-icon>
                 SPIFFS Information
               </v-card-title>
               <v-card-text>
@@ -114,7 +114,7 @@
                           <v-list-item>
                             <v-list-item-content class="align-end">
                               <span>
-                                <v-icon small left>mdi-database</v-icon>
+                                <v-icon small left>{{ mdiDatabase }}</v-icon>
                                 Total
                               </span>
                             </v-list-item-content>
@@ -125,8 +125,8 @@
                           <v-list-item>
                             <v-list-item-content class="align-end">
                               <span>
-                                <v-icon small left
-                                  >mdi-file-document-multiple
+                                <v-icon small left>
+                                  {{ mdiFileDocumentMultiple }}
                                 </v-icon>
                                 Used
                               </span>
@@ -138,7 +138,7 @@
                           <v-list-item>
                             <v-list-item-content class="align-end">
                               <span>
-                                <v-icon small left>mdi-check</v-icon>
+                                <v-icon small left>{{ mdiCheck }}</v-icon>
                                 Free
                               </span>
                             </v-list-item-content>
@@ -156,7 +156,7 @@
                           >
                             <v-list-item-content class="align-end">
                               <span>
-                                <v-icon small left>mdi-code-json</v-icon>
+                                <v-icon small left>{{ mdiCodeJson }}</v-icon>
                                 {{ data.name }}
                               </span>
                             </v-list-item-content>
@@ -171,7 +171,7 @@
                 </v-data-iterator>
               </v-card-text>
               <v-card-title>
-                <v-icon left>mdi-wifi</v-icon>
+                <v-icon left>{{ mdiWifi }}</v-icon>
                 Network Information
               </v-card-title>
               <v-card-text>
@@ -191,7 +191,7 @@
                       v-model="network.password"
                       outlined
                       dense
-                      :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                      :append-icon="showPassword ? mdiEye : mdiEyeOff"
                       :type="showPassword ? 'text' : 'password'"
                       @click:append="showPassword = !showPassword"
                       :rules="[rules.required, rules.min]"
@@ -208,7 +208,7 @@
                         :loading="isUpdatingConfig"
                         :disabled="isInitializing"
                       >
-                        <v-icon left>mdi-check</v-icon>
+                        <v-icon left>{{ mdiCheck }}</v-icon>
                         Update
                       </v-btn>
                     </div>
@@ -218,7 +218,7 @@
                       <v-list-item>
                         <v-list-item-content class="align-end">
                           <span>
-                            <v-icon small left>mdi-ip-network</v-icon>
+                            <v-icon small left>{{ mdiIpNetwork }}</v-icon>
                             IP
                           </span>
                         </v-list-item-content>
@@ -230,7 +230,7 @@
                       <v-list-item>
                         <v-list-item-content class="align-end">
                           <span>
-                            <v-icon small left>mdi-network</v-icon>
+                            <v-icon small left>{{ mdiNetwork }}</v-icon>
                             Subnet Mask
                           </span>
                         </v-list-item-content>
@@ -242,7 +242,9 @@
                       <v-list-item>
                         <v-list-item-content class="align-end">
                           <span>
-                            <v-icon small left>mdi-network-strength-4</v-icon>
+                            <v-icon small left>{{
+                              mdiNetworkStrength4
+                            }}</v-icon>
                             RSSI
                           </span>
                         </v-list-item-content>
@@ -257,8 +259,8 @@
                       <v-list-item>
                         <v-list-item-content class="align-end">
                           <span>
-                            <v-icon small left
-                              >mdi-access-point-network
+                            <v-icon small left>
+                              {{ mdiAccessPointNetwork }}
                             </v-icon>
                             Soft AP IP
                           </span>
@@ -271,7 +273,7 @@
                       <v-list-item>
                         <v-list-item-content class="align-end">
                           <span>
-                            <v-icon small left>mdi-router-network</v-icon>
+                            <v-icon small left>{{ mdiRouterNetwork }}</v-icon>
                             Gateway IP
                           </span>
                         </v-list-item-content>
@@ -283,9 +285,9 @@
                       <v-list-item>
                         <v-list-item-content class="align-end">
                           <span>
-                            <v-icon small left
-                              >mdi-expansion-card-variant</v-icon
-                            >
+                            <v-icon small left>
+                              {{ mdiExpansionCardVariant }}
+                            </v-icon>
                             MAC Address
                           </span>
                         </v-list-item-content>
@@ -307,13 +309,13 @@
         :color="snackbarColor"
       >
         <v-icon v-if="snackbarColor === 'info'" small left>
-          mdi-information-outline
+          {{ mdiInformationOutline }}
         </v-icon>
         <v-icon v-else-if="snackbarColor === 'success'" small left>
-          mdi-check
+          {{ mdiCheck }}
         </v-icon>
         <v-icon v-else-if="snackbarColor === 'error'" small left>
-          mdi-alert
+          {{ mdiAlert }}
         </v-icon>
 
         {{ snackbarText }}
@@ -327,6 +329,29 @@
 </template>
 
 <script>
+import {
+  mdiKeyboard,
+  mdiThemeLightDark,
+  mdiHammerScrewdriver,
+  mdiCodeJson,
+  mdiCloudUpload,
+  mdiSd,
+  mdiDatabase,
+  mdiFileDocumentMultiple,
+  mdiCheck,
+  mdiWifi,
+  mdiEye,
+  mdiEyeOff,
+  mdiIpNetwork,
+  mdiNetwork,
+  mdiNetworkStrength4,
+  mdiAccessPointNetwork,
+  mdiRouterNetwork,
+  mdiExpansionCardVariant,
+  mdiInformationOutline,
+  mdiAlert,
+} from "@mdi/js";
+
 export default {
   name: "App",
 
@@ -355,6 +380,27 @@ export default {
         required: (value) => !!value || "Required.",
         min: (v) => v.length >= 8 || "Min 8 characters",
       },
+      // Icons
+      mdiKeyboard,
+      mdiThemeLightDark,
+      mdiHammerScrewdriver,
+      mdiCodeJson,
+      mdiCloudUpload,
+      mdiSd,
+      mdiDatabase,
+      mdiFileDocumentMultiple,
+      mdiCheck,
+      mdiWifi,
+      mdiEye,
+      mdiEyeOff,
+      mdiIpNetwork,
+      mdiNetwork,
+      mdiNetworkStrength4,
+      mdiAccessPointNetwork,
+      mdiRouterNetwork,
+      mdiExpansionCardVariant,
+      mdiInformationOutline,
+      mdiAlert,
     };
   },
 
